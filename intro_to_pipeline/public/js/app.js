@@ -153,7 +153,7 @@ var app = {
         $( ".topcoat-navigation-bar__item span.icon" ).on( "click", app._header );
         $( "form" ).on( "submit", app._formSubmit );
         $( "input[name='cancel']" ).on( "click", app._cancel );
-        $( "input[name='photo']" ).on( "click", app._photo );
+        $( "button[name='photo']" ).on( "click", app._photo );
         $( "ul" ).on( "click", app._listClick );
 
         //Setup our Pipeline.
