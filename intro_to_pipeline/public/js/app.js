@@ -23,7 +23,9 @@ var app = {
             // The dataz object is an array that contains all the items
             for( i; i < dataz.length; i++ ) {
                 // Just adding the object's id, name and type to the list
-                putItHere.append( "<li class='topcoat-list__item' id='" + dataz[ i ].id + "'><span class='icomatic icon'>delete</span>&nbsp;&nbsp;<span class='icomatic icon'>pencil</span>&nbsp;&nbsp;" + dataz[ i ].name + " : " + dataz[ i ].type );
+                var preview = (dataz[i].preview) ? 
+                    "<img src='" + dataz[ i ].preview + "' >" : "";
+                putItHere.append( "<li class='topcoat-list__item' id='" + dataz[ i ].id + "'><span class='icomatic icon'>delete</span>&nbsp;&nbsp;<span class='icomatic icon'>pencil</span>&nbsp;&nbsp;" + dataz[ i ].name + " : " + dataz[ i ].type + preview);
             }
     },
     _refreshForm: function() {
@@ -65,6 +67,13 @@ var app = {
     _cancel: function() {
         app._refreshForm();
         app._togglePage();
+    },
+    _photo: function( event ) {
+        event.preventDefault();
+        bridgeit.camera('_aegcam', 'app._afterPhoto', {postURL:'/upload'});
+    },
+    _afterPhoto: function( event ) {
+        $( "input[name='preview']" ).val(event.preview);
     },
     read: function( id, isEdit ) {
         // Call the pipe "read" method.
@@ -144,6 +153,7 @@ var app = {
         $( ".topcoat-navigation-bar__item span.icon" ).on( "click", app._header );
         $( "form" ).on( "submit", app._formSubmit );
         $( "input[name='cancel']" ).on( "click", app._cancel );
+        $( "input[name='photo']" ).on( "click", app._photo );
         $( "ul" ).on( "click", app._listClick );
 
         //Setup our Pipeline.
