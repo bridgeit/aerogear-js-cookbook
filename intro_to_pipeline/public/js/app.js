@@ -24,13 +24,16 @@ var app = {
             for( i; i < dataz.length; i++ ) {
                 // Just adding the object's id, name and type to the list
                 var preview = (dataz[i].preview) ? 
-                    "<img src='" + dataz[ i ].preview + "' >" : "";
+                    "<a href='/items/upload/" + dataz[ i ].photoid + "'>" + 
+                    "<img src='" + dataz[ i ].preview + "' ></a>" : "";
                 putItHere.append( "<li class='topcoat-list__item' id='" + dataz[ i ].id + "'><span class='icomatic icon'>delete</span>&nbsp;&nbsp;<span class='icomatic icon'>pencil</span>&nbsp;&nbsp;" + dataz[ i ].name + " : " + dataz[ i ].type + preview);
             }
     },
     _refreshForm: function() {
         $( "form" )[0].reset();
         $( "form input[name='id']" ).removeAttr( "value" );
+        $( "form input[name='photoid']" ).removeAttr( "value" );
+        $( "form input[name='preview']" ).removeAttr( "value" );
     },
     _header: function( event ) {
         if( $(event.target).hasClass( "refresh" ) ) {
@@ -70,10 +73,12 @@ var app = {
     },
     _photo: function( event ) {
         event.preventDefault();
-        bridgeit.camera('_aegcam', 'app._afterPhoto', {postURL:'/upload'});
+        bridgeit.camera('_aegcam',
+            'app._afterPhoto', {postURL:'/items/upload'});
     },
     _afterPhoto: function( event ) {
         $( "input[name='preview']" ).val(event.preview);
+        $( "input[name='photoid']" ).val(event.response);
     },
     read: function( id, isEdit ) {
         // Call the pipe "read" method.

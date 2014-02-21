@@ -16,6 +16,7 @@
  * Module dependencies.
  */
 
+var fs = require('fs');
 var express = require('express');
 var http = require('http');
 var path = require('path');
@@ -29,6 +30,8 @@ var dataz = [{
     name: "Luke",
     type: "JS Hipster"
 }];
+
+var filez = { };
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -60,12 +63,30 @@ app.get( '/items/:id', function( request, response ) {
     response.send( item );
 });
 
+app.get( '/items/upload/:id', function( request, response ) {
+    var file,
+        id = request.params.id;
+    file = filez[id];
+    response.writeHead(200, {'Content-Type': file.headers['content-type'] });
+    response.write(fs.readFileSync(file.path));
+    response.end();
+});
+
 app.post( '/items', function( request, response ) {
     var newData = request.body;
     newData.id = uuid.v4();
     dataz.push( newData );
 
     response.send( newData );
+});
+
+app.post( '/items/upload', function( request, response ) {
+    var files = request.files;
+    var id = uuid.v4();
+    for (var file in files)  {
+        filez[id] = files[file];
+    }
+    response.end(id);
 });
 
 app.put( '/items/:id', function( request, response ) {
