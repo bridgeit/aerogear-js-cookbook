@@ -34,6 +34,7 @@ var app = {
         $( "form input[name='id']" ).removeAttr( "value" );
         $( "form input[name='photoid']" ).removeAttr( "value" );
         $( "form input[name='preview']" ).removeAttr( "value" );
+        $( "#previewthumb" ).html('');
     },
     _header: function( event ) {
         if( $(event.target).hasClass( "refresh" ) ) {
@@ -79,6 +80,7 @@ var app = {
     _afterPhoto: function( event ) {
         $( "input[name='preview']" ).val(event.preview);
         $( "input[name='photoid']" ).val(event.response);
+        $( "#previewthumb" ).html("<img src='" + event.preview + "'>");
     },
     read: function( id, isEdit ) {
         // Call the pipe "read" method.
