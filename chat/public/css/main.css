@@ -1,0 +1,13 @@
+.hidden {
+    display: none;
+}
+
+.topcoat-list__container img {
+    padding: 8px;
+    vertical-align: middle;
+    border-radius:16px;
+}
+
+#edit img {
+    border-radius:8px;
+}
