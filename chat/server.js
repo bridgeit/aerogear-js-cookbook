@@ -27,8 +27,7 @@ var app = express();
 
 var dataz = [{
     id: uuid.v4(),
-    name: "Luke",
-    type: "JS Hipster"
+    chattext: "Welcome to AeroGear/BridgeIt chat",
 }];
 
 var filez = { };
@@ -67,8 +66,33 @@ app.get( '/items/upload/:id', function( request, response ) {
     var file,
         id = request.params.id;
     file = filez[id];
-    response.writeHead(200, {'Content-Type': file.headers['content-type'] });
-    response.write(fs.readFileSync(file.path));
+    var header = {};
+    header["Content-Type"] = file.headers['content-type'];
+    var fileBuf = fs.readFileSync(file.path);
+
+    if (!!request.headers.range)  {
+        var range = request.headers.range;
+        var ranges = range.replace(/bytes=/, "").split("-");
+        var rangeStart = ranges[0];
+        var rangeEnd = ranges[1];
+
+        var total = fileBuf.length;
+        
+        var start = parseInt(rangeStart, 10);
+        var end = rangeEnd ? parseInt(rangeEnd, 10) : total - 1;
+
+        header["Content-Range"] = "bytes " + start + "-" + end + "/" + (total);
+        header["Accept-Ranges"] = "bytes";
+        header["Content-Length"] = (end - start) + 1;
+
+        response.writeHead(206, header);
+        //HTTP ranges are inclusive
+        var rangeBuf = fileBuf.slice(start, end + 1);
+        response.write(rangeBuf);
+    } else {
+        response.writeHead(206, header);
+        response.write(fileBuf);
+    }
     response.end();
 });
 

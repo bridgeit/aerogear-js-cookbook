@@ -15,34 +15,25 @@
                 <span class="icomatic icon refresh">refresh</span>
             </div>
             <div class="topcoat-navigation-bar__item center half">
-                <h1 class="topcoat-navigation-bar__title">Intro To Pipeline</h1>
-            </div>
-            <div class="topcoat-navigation-bar__item right quarter">
-                <span class="icomatic icon plus">plus</span>
+                <h1 class="topcoat-navigation-bar__title"><img src="http://aerogear.org/favicon.ico">Chat<img src="http://bridgeit.mobi/favicon.png"></h1>
             </div>
         </div>
         <section id="items">
             <ul class="topcoat-list__container"></ul>
         </section>
-        <section id="edit" class="hidden">
-            <div class="full center">
-                <h3>Enter a Name</h3>
-                <form>
-                    <input type="hidden" name="id">
-                    <input type="text" class="topcoat-text-input" placeholder="Name" name="name" value="">
-                    <br></br>
-                    <input type="text" class="topcoat-text-input" placeholder="Type" name="type" value="">
-                    <br><br>
-                    <button class="topcoat-button--quiet" name="photo">Photo</button>
-                    <span id="previewthumb"></span>
-                    <input type="hidden" name="preview">
-                    <input type="hidden" name="photoid">
-                    <br><br>
-                    <input type="submit" class="topcoat-button--quiet">
-                    <input type="button" class="topcoat-button--quiet" name="cancel" value="Cancel">
-                </form>
-            </div>
-        </section>
+        <div id="chatinput" class="footer">
+            <form>
+                <input type="text" class="topcoat-text-input" placeholder="chat ..." name="chattext" style="width:40%" value="">
+                <button class="topcoat-button" name="getphoto"><span class="icomatic icon">camera</span></button>
+                <button class="topcoat-button" name="getaudio"><span class="icomatic icon">audio</span></button>
+                <input type="hidden" name="preview">
+                <input type="hidden" name="photoid">
+                <input type="hidden" name="audioid">
+                <button class="topcoat-button" name="dochat"><span class="icomatic icon">arrowup</span></button>
+            </form>
+        </div>
+        <div style="width:100%;height:60px;">
+        </div>
         <script src="bower_components/jquery/jquery.min.js"></script>
         <script src="bower_components/aerogear/aerogear.js"></script> <!--In production, use the minified version-->
         <script type="text/javascript" src="http://bridgeit.github.io/bridgeit.js/src/bridgeit.js"></script>

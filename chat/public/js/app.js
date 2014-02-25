@@ -26,61 +26,79 @@ var app = {
                 var preview = (dataz[i].preview) ? 
                     "<a href='/items/upload/" + dataz[ i ].photoid + "'>" + 
                     "<img src='" + dataz[ i ].preview + "' ></a>" : "";
-                putItHere.append( "<li class='topcoat-list__item' id='" + dataz[ i ].id + "'><span class='icomatic icon'>delete</span>&nbsp;&nbsp;<span class='icomatic icon'>pencil</span>&nbsp;&nbsp;" + dataz[ i ].name + " : " + dataz[ i ].type + preview);
+                var auClip = (dataz[i].audioid) ? 
+                    "<audio src='/items/upload/" + dataz[ i ].audioid + 
+                    "' controls='controls'></audio>" : "";
+                putItHere.append( "<li class='topcoat-list__item' id='" + dataz[ i ].id + "'>" + dataz[ i ].chattext + "  " + 
+                    preview + auClip);
             }
+        $(window).scrollTop($(document).height());
     },
     _refreshForm: function() {
         $( "form" )[0].reset();
         $( "form input[name='id']" ).removeAttr( "value" );
         $( "form input[name='photoid']" ).removeAttr( "value" );
+        $( "form input[name='audioid']" ).removeAttr( "value" );
         $( "form input[name='preview']" ).removeAttr( "value" );
-        $( "#previewthumb" ).html('');
     },
     _header: function( event ) {
         if( $(event.target).hasClass( "refresh" ) ) {
             // call refresh
             app.refresh();
-        } else {
-            // Show create screen
-            app._togglePage( "edit" );
-        }
+        } 
     },
-    _listClick: function( event ) {
-        var target = event.target,
-            li = $( target ).closest( "li" ),
-            id = li[ 0 ].id,
-            targetText = $( target ).text();
-
-        if( targetText === "delete" ) {
-            // Get the ID and Call remove
-            app.remove( id );
-        } else if( targetText === "pencil" ) {
-            // First read the data from the server and then edit
-            app.read( id, true );
-
+//    _listClick: function( event ) {
+//        var target = event.target,
+//            li = $( target ).closest( "li" ),
+//            id = li[ 0 ].id,
+//            targetText = $( target ).text();
+//
+//        if( targetText === "delete" ) {
+//            // Get the ID and Call remove
+//            app.remove( id );
+//        } else if( targetText === "pencil" ) {
+//            // First read the data from the server and then edit
+//            app.read( id, true );
+//
+//        }
+//    },
+    _findForm: function( elm ) {
+        while (!!elm)  {
+            if ("form" === elm.tagName.toLowerCase())  {
+                return elm;
+            }
+            elm = elm.parentNode;
         }
     },
     _formSubmit: function( event ) {
         event.preventDefault();
+        var theForm = app._findForm(this);
 
-        var data = $( this ).serializeObject();
+        var data = $( theForm ).serializeObject();
 
         //Save the Data
         app.save( data );
     },
-    _cancel: function() {
-        app._refreshForm();
-        app._togglePage();
-    },
+//    _cancel: function() {
+//        app._refreshForm();
+//        app._togglePage();
+//    },
     _photo: function( event ) {
         event.preventDefault();
         bridgeit.camera('_aegcam',
             'app._afterPhoto', {postURL:'/items/upload'});
     },
+    _audio: function( event ) {
+        event.preventDefault();
+        bridgeit.microphone('_aegaud',
+            'app._afterAudio', {postURL:'/items/upload'});
+    },
     _afterPhoto: function( event ) {
         $( "input[name='preview']" ).val(event.preview);
         $( "input[name='photoid']" ).val(event.response);
-        $( "#previewthumb" ).html("<img src='" + event.preview + "'>");
+    },
+    _afterAudio: function( event ) {
+        $( "input[name='audioid']" ).val(event.response);
     },
     read: function( id, isEdit ) {
         // Call the pipe "read" method.
@@ -160,7 +178,9 @@ var app = {
         $( ".topcoat-navigation-bar__item span.icon" ).on( "click", app._header );
         $( "form" ).on( "submit", app._formSubmit );
         $( "input[name='cancel']" ).on( "click", app._cancel );
-        $( "button[name='photo']" ).on( "click", app._photo );
+        $( "button[name='getphoto']" ).on( "click", app._photo );
+        $( "button[name='getaudio']" ).on( "click", app._audio );
+        $( "button[name='dochat']" ).on( "click", app._formSubmit );
         $( "ul" ).on( "click", app._listClick );
 
         //Setup our Pipeline.
@@ -184,6 +204,8 @@ app.init();
 $.fn.serializeObject = function() {
     var o = {};
     var a = this.serializeArray();
+console.log("serialize ...");
+console.log(this);
     $.each( a, function() {
         if ( o[ this.name ] ) {
             if ( !o[ this.name ].push ) {
