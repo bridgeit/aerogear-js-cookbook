@@ -204,8 +204,6 @@ app.init();
 $.fn.serializeObject = function() {
     var o = {};
     var a = this.serializeArray();
-console.log("serialize ...");
-console.log(this);
     $.each( a, function() {
         if ( o[ this.name ] ) {
             if ( !o[ this.name ].push ) {
