@@ -93,7 +93,7 @@ var app = {
     _audio: function( event ) {
         event.preventDefault();
         bridgeit.microphone('_aegaud',
-            'app._afterAudio', {postURL:ECHO +'blob''});
+            'app._afterAudio', {postURL:ECHO +'blob'});
     },
     _afterPhoto: function( event ) {
         $( "input[name='preview']" ).val(event.preview);
