@@ -14,6 +14,9 @@
 
 var ECHO = "http://api.bridgeit.mobi/echo/";
 
+//a new chat group each hour
+var D = Math.floor((new Date()).getTime() / (60 * 60 * 1000));
+
 var app = {
     agPipes: {},
     _addToUI: function( dataz ) {
@@ -192,7 +195,7 @@ var app = {
         //add a pipeline to BridgeIt echo service
         pipeline.add( {name:"items", 
             settings:{baseURL: "http://api.bridgeit.mobi/echo/list/", 
-                      endpoint:"aerochat"}
+                      endpoint:"aerochat" + D}
         });
 
         app.agPipes.items = pipeline.pipes.items;
@@ -202,7 +205,7 @@ var app = {
         bridgeit.usePushService(
             'http://api.bridgeit.mobi/push/',
                 '197EBF31-40CD-444F-826F-10158A0F3581');
-        bridgeit.addPushListener('aerochat', 'app.refresh');
+        bridgeit.addPushListener('aerochat' + D, 'app.refresh');
 
     }
 };
