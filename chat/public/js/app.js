@@ -194,6 +194,11 @@ var app = {
 
         // Load all data on init
         app.read();
+        bridgeit.usePushService(
+            'http://api.bridgeit.mobi/push/',
+                '197EBF31-40CD-444F-826F-10158A0F3581');
+        bridgeit.addPushListener('aerochat', 'app.refresh');
+
     }
 };
 
