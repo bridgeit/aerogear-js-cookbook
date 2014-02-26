@@ -1,0 +1,14 @@
+{
+  "name": "topcoat-icons",
+  "homepage": "https://github.com/topcoat/icons",
+  "version": "0.2.0",
+  "_release": "0.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.2.0",
+    "commit": "c56faeb35790199e8d6f7d0b4ad15b946a544474"
+  },
+  "_source": "git://github.com/topcoat/icons.git",
+  "_target": "~0.2.0",
+  "_originalSource": "topcoat-icons"
+}
