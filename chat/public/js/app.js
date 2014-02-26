@@ -100,10 +100,10 @@ var app = {
     },
     _afterPhoto: function( event ) {
         $( "input[name='preview']" ).val(event.preview);
-        $( "input[name='photoid']" ).val(event.response);
+        $( "input[name='photoid']" ).val(JSON.parse(event.response));
     },
     _afterAudio: function( event ) {
-        $( "input[name='audioid']" ).val(event.response);
+        $( "input[name='audioid']" ).val(JSON.parse(event.response));
     },
     read: function( id, isEdit ) {
         // Call the pipe "read" method.
