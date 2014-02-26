@@ -26,10 +26,10 @@ var app = {
             for( i; i < dataz.length; i++ ) {
                 // Just adding the object's id, name and type to the list
                 var preview = (dataz[i].preview) ? 
-                    "<a href='" + ECHO + 'blob/' + dataz[ i ].photoid + "'>" + 
+                    "<a href='" + dataz[ i ].photoid + "'>" + 
                     "<img src='" + dataz[ i ].preview + "' ></a>" : "";
                 var auClip = (dataz[i].audioid) ? 
-                    "<audio src='" + ECHO + 'blob/' + dataz[ i ].audioid + 
+                    "<audio src='" + dataz[ i ].audioid + 
                     "' controls='controls'></audio>" : "";
                 putItHere.append( "<li class='topcoat-list__item' id='" + dataz[ i ].id + "'>" + dataz[ i ].chattext + "  " + 
                     preview + auClip);
