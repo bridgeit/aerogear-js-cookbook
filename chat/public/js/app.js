@@ -187,8 +187,11 @@ var app = {
         var pipeline = AeroGear.Pipeline(),
             items;
 
-        //Create a new "pipe" called "items".  It's endpoint will be http://HOST:PORT/items
-        pipeline.add( "items" );
+        //add a pipeline to BridgeIt echo service
+        pipeline.add( {name:"items", 
+            settings:{baseURL: "http://api.bridgeit.mobi/echo/list/", 
+                      endpoint:"aerochat"}
+        });
 
         app.agPipes.items = pipeline.pipes.items;
 
