@@ -12,6 +12,8 @@
 * limitations under the License.
 */
 
+var ECHO = "http://api.bridgeit.mobi/echo/";
+
 var app = {
     agPipes: {},
     _addToUI: function( dataz ) {
@@ -24,10 +26,10 @@ var app = {
             for( i; i < dataz.length; i++ ) {
                 // Just adding the object's id, name and type to the list
                 var preview = (dataz[i].preview) ? 
-                    "<a href='/items/upload/" + dataz[ i ].photoid + "'>" + 
+                    "<a href='" + ECHO + blob + dataz[ i ].photoid + "'>" + 
                     "<img src='" + dataz[ i ].preview + "' ></a>" : "";
                 var auClip = (dataz[i].audioid) ? 
-                    "<audio src='/items/upload/" + dataz[ i ].audioid + 
+                    "<audio src='" + ECHO + blob + dataz[ i ].audioid + 
                     "' controls='controls'></audio>" : "";
                 putItHere.append( "<li class='topcoat-list__item' id='" + dataz[ i ].id + "'>" + dataz[ i ].chattext + "  " + 
                     preview + auClip);
@@ -86,12 +88,12 @@ var app = {
     _photo: function( event ) {
         event.preventDefault();
         bridgeit.camera('_aegcam',
-            'app._afterPhoto', {postURL:'/items/upload'});
+            'app._afterPhoto', {postURL:ECHO + 'blob'});
     },
     _audio: function( event ) {
         event.preventDefault();
         bridgeit.microphone('_aegaud',
-            'app._afterAudio', {postURL:'/items/upload'});
+            'app._afterAudio', {postURL:ECHO +'blob''});
     },
     _afterPhoto: function( event ) {
         $( "input[name='preview']" ).val(event.preview);
